@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: tts-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: "pip install -r ../requirements.txt"
+    startCommand: "gunicorn app:create_app() --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FRONTEND_URL
+        sync: false   # Set this manually in Render dashboard after deploying frontend
+    healthCheckPath: /api/health
